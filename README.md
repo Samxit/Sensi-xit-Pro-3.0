@@ -1,0 +1,263 @@
+index.html<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SensiMaster Pro 3.0 - VIP</title>
+    <style>
+        :root {
+            --primary: #ffde00;
+            --accent: #ff4500;
+            --bg: #0d0d0d;
+            --card: #1a1a1a;
+            --text: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+        }
+
+        .container { max-width: 600px; margin: auto; }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 15px;
+            color: #000;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(255, 69, 0, 0.3);
+        }
+
+        .daily-badge {
+            background: #000;
+            color: var(--primary);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* ESTILO DO CONTADOR */
+        .click-counter {
+            font-size: 11px;
+            color: #000;
+            background: rgba(255,255,255,0.3);
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-top: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .search-container {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #444;
+            background: #252525;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .sensi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .sensi-box {
+            background: #252525;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+            transition: 0.3s;
+        }
+
+        .sensi-box span { display: block; font-size: 26px; font-weight: bold; color: var(--primary); }
+        .sensi-box small { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+        .btn-main {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .btn-copy {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .metodos {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .badge {
+            background: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .footer-info {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="daily-badge" id="date-now">SENSI ATUALIZADA</div>
+        <h1>SensiMaster Pro 3.0</h1>
+        <p>Busca Avançada por Marca e Modelo</p>
+        <div class="click-counter">SENSIS GERADAS HOJE: <span id="count-number">0</span></div>
+    </div>
+
+    <div class="search-container">
+        <label style="font-size: 13px; color: var(--primary);">DIGITE O MODELO DO SEU CELULAR:</label>
+        <input type="text" id="deviceSearch" placeholder="Ex: Samsung A54, iPhone 13, Moto G8..." oninput="checkDevice()">
+        
+        <div class="sensi-grid">
+            <div class="sensi-box"><small>Geral</small><span id="v-geral">--</span></div>
+            <div class="sensi-box"><small>Ponto Vermelho</small><span id="v-red">--</span></div>
+            <div class="sensi-box"><small>Mira 2x</small><span id="v-2x">--</span></div>
+            <div class="sensi-box"><small>Mira 4x</small><span id="v-4x">--</span></div>
+            <div class="sensi-box"><small>DPI / Cursor</small><span id="v-dpi">--</span></div>
+            <div class="sensi-box"><small>Botão de Atirar</small><span id="v-btn">--</span></div>
+        </div>
+        
+        <button class="btn-main" onclick="gerarSensi()">Gerar Sensi Personalizada</button>
+        <button class="btn-copy" onclick="copyConfig()">Copiar para o Jogo</button>
+    </div>
+
+    <div class="metodos">
+        <h3>⚡ Métodos Vip Instalados</h3>
+        <p style="font-size: 14px;"><span class="badge">ANDROID</span> <b>Velocidade do Ponteiro:</b> Coloque no máximo e volte 2 casas.</p>
+        <p style="font-size: 14px;"><span class="badge">IOS</span> <b>Acessibilidade:</b> Controle Assistido > Ciclos em 10.</p>
+        <p style="font-size: 14px;"><span class="badge">DICA</span> <b>Tempo de Resposta:</b> Use o atraso ao manter pressionado em 0.5s (Curto).</p>
+    </div>
+
+    <div class="footer-info">
+        &copy; 2026 SensiMaster Pro - Free Fire Configs
+    </div>
+</div>
+
+<script>
+    // Mostrar data atual
+    const data = new Date();
+    document.getElementById('date-now').innerText = "SENSI DO DIA: " + data.toLocaleDateString();
+
+    // INICIALIZAR CONTADOR
+    let clicks = localStorage.getItem('sensiClicks') || 0;
+    document.getElementById('count-number').innerText = clicks;
+
+    function gerarSensi() {
+        const search = document.getElementById('deviceSearch').value.toLowerCase();
+        
+        // Lógica do Contador
+        clicks++;
+        localStorage.setItem('sensiClicks', clicks);
+        document.getElementById('count-number').innerText = clicks;
+
+        // Gera valores de 0 a 200 para miras e 90-100 para Geral
+        document.getElementById('v-geral').innerText = Math.floor(Math.random() * (100 - 92 + 1)) + 92;
+        document.getElementById('v-red').innerText = Math.floor(Math.random() * 201);
+        document.getElementById('v-2x').innerText = Math.floor(Math.random() * 201);
+        document.getElementById('v-4x').innerText = Math.floor(Math.random() * 201);
+        document.getElementById('v-btn').innerText = Math.floor(Math.random() * (58 - 40 + 1)) + 40 + "%";
+
+        // Lógica Inteligente para DPI ou iOS
+        if (search.includes("iphone") || search.includes("apple") || search.includes("ios") || search.includes("ipad")) {
+            document.getElementById('v-dpi').innerText = "120 pts";
+        } else {
+            document.getElementById('v-dpi').innerText = Math.floor(Math.random() * (850 - 411 + 1)) + 411;
+        }
+
+        // Efeito visual de atualização
+        const boxes = document.querySelectorAll('.sensi-box');
+        boxes.forEach(b => {
+            b.style.transform = "scale(1.05)";
+            setTimeout(() => b.style.transform = "scale(1)", 200);
+        });
+    }
+
+    function copyConfig() {
+        const g = document.getElementById('v-geral').innerText;
+        const rd = document.getElementById('v-red').innerText;
+        const m2 = document.getElementById('v-2x').innerText;
+        const m4 = document.getElementById('v-4x').innerText;
+        const dpi = document.getElementById('v-dpi').innerText;
+        const btn = document.getElementById('v-btn').innerText;
+        const modelo = document.getElementById('deviceSearch').value || "Meu Celular";
+
+        if(g === "--") {
+            alert("Gere uma sensibilidade primeiro!");
+            return;
+        }
+
+        const texto = `🎯 MINHA SENSI PARA ${modelo.toUpperCase()}\n\n` +
+                      `• Geral: ${g}\n` +
+                      `• Ponto Vermelho: ${rd}\n` +
+                      `• Mira 2x: ${m2}\n` +
+                      `• Mira 4x: ${m4}\n` +
+                      `• DPI/Cursor: ${dpi}\n` +
+                      `• Botão: ${btn}\n\n` +
+                      `Gerado por SensiMaster Pro 3.0`;
+
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("Copiado com sucesso! Agora cole no seu bloco de notas ou WhatsApp.");
+        });
+    }
+
+    function checkDevice() {
+        const input = document.getElementById('deviceSearch');
+        if(input.value.length > 0) {
+            input.style.borderColor = "var(--primary)";
+        } else {
+            input.style.borderColor = "#444";
+        }
+    }
+</script>
+
+</body>
+</html>
